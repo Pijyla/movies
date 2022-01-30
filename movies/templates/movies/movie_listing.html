@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'nav.html' %} 
+
+{% for movie in movies %}
+<div class="card bg-dark text-white">
+    <img src='{{movie.image}}' class="card-img" alt="Movie_time">
+    <div class="card-img-overlay">
+    <h5 class="card-title"> {{ movie.movie }} - {{ movie.IMDb_rating }} </h5>
+    <p class="card-text"> {{ movie.year }} </p>   
+    <a href="/movies/{{forloop.counter}}" class="btn btn-primary">About movie</a>           
+    </div>
+</div>
+
+<br/>
+<h2>Comments:</h2>
+<br/>
+{% if not movie.comments.all %}
+    No Comments yet... <a href="">Add One</a>
+        <br/><br/>
+        <hr/>
+{% else %}
+<a href="">Add Comment</a>
+<br/><br/>
+    {% for comment in movie.comments.all %}
+          <strong>
+              {{ comment.user }} -
+              {{ comment.date_added }}
+          </strong>  
+          <br/>
+          {{ comment.body }}
+          <br/><br/>
+          <hr/>
+    {% endfor %}
+{% endif %}
+
+{% endfor %}
+{% endblock %}
